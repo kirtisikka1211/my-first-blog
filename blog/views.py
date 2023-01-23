@@ -4,8 +4,12 @@ from .models import Post
 from .forms import PostForm
 
 # Create your views here.
-def post_list(request):
+def home(request):
+    return render(request, 'blog/home.html')
+def post_list(request,pk):
+    
     posts = Post.objects.all().filter(published_date__lte=timezone.now()).order_by('published_date')
+    h=get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_list.html', {'posts':posts})
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
